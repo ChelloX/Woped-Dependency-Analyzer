@@ -31,7 +31,7 @@ public class Visualizer {
 		foldersToIgnore.add("WoPeD-TranslationEditor");
 	}
 
-	public void doSth(String wopedProjectDir) {
+	public void visualize(String wopedProjectDir) {
 		createWopedProjects(wopedProjectDir);
 		System.out.println("Anzahl der WopedProjektFolder: " + wopedProjects.size());
 		analyzeDependencies();
