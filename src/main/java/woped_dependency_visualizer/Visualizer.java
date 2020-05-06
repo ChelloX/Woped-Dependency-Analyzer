@@ -27,7 +27,7 @@ public class Visualizer {
 		foldersToIgnore.add(".idea");
 		foldersToIgnore.add(".git"); // <-- Wird warum auch immer als Directory angesehen und nicht als File
 		
-		foldersToIgnore.add("WoPeD-ProjectFiles");
+		foldersToIgnore.add("WoPeD-ProjectFiles"); 
 		foldersToIgnore.add("WoPeD-TranslationEditor");
 	}
 

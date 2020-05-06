@@ -20,18 +20,21 @@ public class JGraphXAdapterDemo extends JApplet {
 	private static final Dimension DEFAULT_SIZE = new Dimension(530, 320);
 
 	private JGraphXAdapter<String, DefaultEdge> jgxAdapter;
-	
+
 	ListenableGraph<String, DefaultEdge> graph;
 
 	public JGraphXAdapterDemo(ListenableGraph<String, DefaultEdge> graph) {
 		this.graph = graph;
-		
+
 		JFrame frame = new JFrame();
+		
 		frame.getContentPane().add(this);
-		frame.setTitle("JGraphT Adapter to JGraphX Demo");
+		frame.setTitle("Woped-Dependency-Visualizer");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
+		frame.setSize(500, 500);
 		frame.setVisible(true);
+
 	}
 
 	@Override
