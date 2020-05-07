@@ -1,4 +1,4 @@
-package woped_dependency_visualizer;
+package woped_dependency_visualizer.utils;
 
 import java.io.File;
 import java.util.ArrayList;

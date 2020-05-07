@@ -1,4 +1,4 @@
-package woped_dependency_visualizer;
+package woped_dependency_visualizer.visualizer;
 
 import java.awt.Dimension;
 
