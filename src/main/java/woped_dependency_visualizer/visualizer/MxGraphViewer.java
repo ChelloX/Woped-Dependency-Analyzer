@@ -5,15 +5,14 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 
 import org.jgrapht.ext.JGraphXAdapter;
-import org.jgrapht.graph.DefaultEdge;
 
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.swing.mxGraphComponent;
 
 public class MxGraphViewer {
-	JGraphXAdapter<String, DefaultEdge> graphXAdapter;
+	JGraphXAdapter<String, MyEdge> graphXAdapter;
 	
-	public MxGraphViewer(JGraphXAdapter<String, DefaultEdge> jGraphXAdapter) {
+	public MxGraphViewer(JGraphXAdapter<String, MyEdge> jGraphXAdapter) {
 		this.graphXAdapter = jGraphXAdapter;
 	}
 
@@ -25,10 +24,10 @@ public class MxGraphViewer {
 		component.setConnectable(false);
 		component.getGraph().setAllowDanglingEdges(false);
 		
+		
 		mxCompactTreeLayout layout = new mxCompactTreeLayout(graphXAdapter);
 		layout.setLevelDistance(100);
 		layout.execute(graphXAdapter.getDefaultParent());
-		
 		
 		jf.add(component);
 		jf.setVisible(true);

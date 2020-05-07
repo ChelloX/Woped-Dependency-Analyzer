@@ -8,14 +8,18 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import woped_dependency_visualizer.utils.WopedProjectFolder;
+import woped_dependency_visualizer.data.WopedProjectFolder;
+import woped_dependency_visualizer.data.WopedProjectFolderDependency;
 
 public class WopedProjectAnalyzer {
+	private static Logger LOGGER = Logger.getLogger(WopedProjectAnalyzer.class);
+	
 	private ArrayList<String> foldersToIgnore;
 
 	public WopedProjectAnalyzer() {
@@ -31,8 +35,10 @@ public class WopedProjectAnalyzer {
 	}
 
 	public ArrayList<WopedProjectFolder> analyze(String wopedProjectDir) {
+		LOGGER.debug("Start analyze: " + wopedProjectDir);
 		ArrayList<WopedProjectFolder> wopedProjects = createWopedProjects(wopedProjectDir);
 		addDependenciesToProjects(wopedProjects);
+		LOGGER.debug("End analyze");
 		return wopedProjects;
 	}
 
@@ -45,6 +51,7 @@ public class WopedProjectAnalyzer {
 				if (f.isDirectory()) {
 					WopedProjectFolder wpf = new WopedProjectFolder(f);
 					wopedProjects.add(wpf);
+					LOGGER.debug("Add Folder " + f.getAbsolutePath() + " as " + wpf.getName());
 				}
 			}
 		}
@@ -54,7 +61,7 @@ public class WopedProjectAnalyzer {
 	private ArrayList<WopedProjectFolder> addDependenciesToProjects(ArrayList<WopedProjectFolder> wopedProjects) {
 		for (WopedProjectFolder wpf : wopedProjects) {
 
-			File pwfIml = new File(wpf.getFile().getAbsoluteFile() + "\\" + wpf.getName() + ".iml");
+			File pwfIml = new File(wpf.getFolder().getAbsoluteFile() + "\\" + wpf.getName() + ".iml");
 
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder;
@@ -68,8 +75,9 @@ public class WopedProjectAnalyzer {
 					if (orderEntry.getAttributes().getNamedItem("type").getTextContent().equals("module")) {
 						if (getWopedProjectFolderForName(wopedProjects,
 								orderEntry.getAttributes().getNamedItem("module-name").getTextContent()) != null) {
-							wpf.addDependenciesIntern(getWopedProjectFolderForName(wopedProjects,
-									orderEntry.getAttributes().getNamedItem("module-name").getTextContent()));
+							LOGGER.debug("Add module " + orderEntry.getAttributes().getNamedItem("module-name").getTextContent() + " as dependency to " + wpf.getName());
+							wpf.addDependenciesIntern(new WopedProjectFolderDependency(getWopedProjectFolderForName(wopedProjects,
+									orderEntry.getAttributes().getNamedItem("module-name").getTextContent())));
 						}
 					}
 				}
