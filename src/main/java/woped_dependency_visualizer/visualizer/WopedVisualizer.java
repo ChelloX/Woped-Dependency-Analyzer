@@ -19,10 +19,10 @@ import woped_dependency_visualizer.utils.WopedGraphUtil;
 public class WopedVisualizer {
 	private ArrayList<WopedProjectFolder> wopedProjects;
 
-	public void visualize(ArrayList<WopedProjectFolder> projects) {
+	public void visualize(ArrayList<WopedProjectFolder> projects, String centralPgk) {
 		this.wopedProjects = projects;
 		ListenableGraph<String, MyEdge> graph = WopedGraphUtil
-				.buildGraph(getWopedProjectFolderForName("WoPeD-Starter"));
+				.buildGraph(getWopedProjectFolderForName(centralPgk));
 
 		exportGraph(graph);
 
